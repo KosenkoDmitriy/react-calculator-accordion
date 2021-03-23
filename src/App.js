@@ -21,6 +21,11 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import FormControl from 'react-bootstrap/FormControl';
 import InputGroup from 'react-bootstrap/InputGroup';
+import Table from 'react-bootstrap/Table';
+
+import ToggleButton from "react-bootstrap/ToggleButton";
+import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
+
 
 class App extends Component {
   constructor() {
@@ -28,27 +33,29 @@ class App extends Component {
     this.state = {
       costMin: 300,
       costMax: 1000,
+      currentTabIndex: 0,
+      selectedItems: [],
       tabs: [
-        { title: 'Low-Cost', id: 'low-cost', costMin: 300, costMax: 1000,
+        { title: 'Low-Cost', id: 'low-cost', index: 0, costMin: 300, costMax: 1000,
         collections: [
           { title: 'Pre-Production', 
             questions: [
               {
                 title: "1. Do you require a concept, script and storyboard?",
                 answers: [
-                  {title: "We will supply the concept and script"},
-                  {title: "We need a concept only"},
-                  {title: "We need a concept and script"},
-                  {title: "We need a concept and storyboard"},
+                  {title: "We will supply the concept and script", isChecked: false, costMin: 0, costMax: 0 },
+                  {title: "We need a concept only", isChecked: false, costMin: 100, costMax: 500 },
+                  {title: "We need a concept and script", isChecked: false, costMin: 200, costMax: 700 },
+                  {title: "We need a concept and storyboard", isChecked: false, costMin: 300, costMax: 1000 },
                 ]
               },
               {
                 title: "2. Who will handle the project scheduling and the admin?",
                 answers: [
-                  {title: "We will handle all schedulintg and admin"},
-                  {title: "We will share admin and scheduling with production company"},
-                  {title: "Production company to perform basic scheduling tasks"},
-                  {title: "Production company to perform all scheduling and admin"},
+                  {title: "We will handle all schedulintg and admin", isChecked: false, costMin: 0, costMax: 0 },
+                  {title: "We will share admin and scheduling with production company", isChecked: false, costMin: 100, costMax: 500 },
+                  {title: "Production company to perform basic scheduling tasks", isChecked: false, costMin: 200, costMax: 700 },
+                  {title: "Production company to perform all scheduling and admin", isChecked: false, costMin: 300, costMax: 1000 },
                 ]
               },
             ]
@@ -58,71 +65,71 @@ class App extends Component {
             {
               title: "3. What type of film crew do you need for your shoot?",
               answers: [
-                {title: "We don't need a camera for this video project"},
-                {title: "One camera operator with camera, lights and audio"},
-                {title: "One camera operator with two cameras lights and audio"},
-                {title: "Two camera operators with two cameras lights and audio"},
+                {title: "We don't need a camera for this video project", isChecked: false, costMin: 0, costMax: 0 },
+                {title: "One camera operator with camera, lights and audio", isChecked: false, costMin: 100, costMax: 500 },
+                {title: "One camera operator with two cameras lights and audio", isChecked: false, costMin: 200, costMax: 700 },
+                {title: "Two camera operators with two cameras lights and audio", isChecked: false, costMin: 300, costMax: 1000 },
               ]
             },
             {
               title: "4. How many days of shooting are required?",
               answers: [
-                {title: "Half day of shooting"},
-                {title: "Full day of shooting"},
-                {title: "Two days of shooting"},
-                {title: "Three days of shooting"},
+                {title: "Half day of shooting", isChecked: false, costMin: 0, costMax: 0 },
+                {title: "Full day of shooting", isChecked: false, costMin: 100, costMax: 500 },
+                {title: "Two days of shooting", isChecked: false, costMin: 200, costMax: 700 },
+                {title: "Three days of shooting", isChecked: false, costMin: 300, costMax: 1000 },
               ]
             },
             ]
           }
         ]
         },
-        { title: 'Mid-Range', id: 'mid-range', costMin: 1000, costMax: 5000,
+        { title: 'Mid-Range', id: 'mid-range', index: 1, costMin: 1000, costMax: 5000,
           collections: [
             { title: 'Pre-Production', 
               questions: [
               {
                 title: "3. What type of film crew do you need for your shoot?",
                 answers: [
-                  {title: "We don't need a camera for this video project"},
-                  {title: "One camera operator with camera, lights and audio"},
-                  {title: "One camera operator with two cameras lights and audio"},
-                  {title: "Two camera operators with two cameras lights and audio"},
+                  {title: "We don't need a camera for this video project", isChecked: false, costMin: 0, costMax: 0 },
+                  {title: "One camera operator with camera, lights and audio", isChecked: false, costMin: 100, costMax: 500 },
+                  {title: "One camera operator with two cameras lights and audio", isChecked: false, costMin: 200, costMax: 700 },
+                  {title: "Two camera operators with two cameras lights and audio", isChecked: false, costMin: 300, costMax: 1000 },
                 ]
               },
               {
                 title: "4. How many days of shooting are required?",
                 answers: [
-                  {title: "Half day of shooting"},
-                  {title: "Full day of shooting"},
-                  {title: "Two days of shooting"},
-                  {title: "Three days of shooting"},
+                  {title: "Half day of shooting", isChecked: false, costMin: 0, costMax: 0 },
+                  {title: "Full day of shooting", isChecked: false, costMin: 100, costMax: 500 },
+                  {title: "Two days of shooting", isChecked: false, costMin: 200, costMax: 700 },
+                  {title: "Three days of shooting", isChecked: false, costMin: 300, costMax: 1000 },
                 ]
               },
               ]
             }
           ]
         },
-        { title: 'High-End', id: 'high-end', costMin: 5000, costMax: 20000,
+        { title: 'High-End', id: 'high-end', index: 2, costMin: 5000, costMax: 20000,
           collections: [
             { title: 'Pre-Production', 
               questions: [
               {
                 title: "3. What type of film crew do you need for your shoot?",
                 answers: [
-                  {title: "We don't need a camera for this video project"},
-                  {title: "One camera operator with camera, lights and audio"},
-                  {title: "One camera operator with two cameras lights and audio"},
-                  {title: "Two camera operators with two cameras lights and audio"},
+                  {title: "We don't need a camera for this video project", isChecked: false, costMin: 0, costMax: 0 },
+                  {title: "One camera operator with camera, lights and audio", isChecked: false, costMin: 100, costMax: 500 },
+                  {title: "One camera operator with two cameras lights and audio", isChecked: false, costMin: 200, costMax: 700 },
+                  {title: "Two camera operators with two cameras lights and audio", isChecked: false, costMin: 300, costMax: 1000 },
                 ]
               },
               {
                 title: "4. How many days of shooting are required?",
                 answers: [
-                  {title: "Half day of shooting"},
-                  {title: "Full day of shooting"},
-                  {title: "Two days of shooting"},
-                  {title: "Three days of shooting"},
+                  {title: "Half day of shooting", isChecked: false, costMin: 0, costMax: 0 },
+                  {title: "Full day of shooting", isChecked: false, costMin: 100, costMax: 500 },
+                  {title: "Two days of shooting", isChecked: false, costMin: 200, costMax: 700 },
+                  {title: "Three days of shooting", isChecked: false, costMin: 300, costMax: 1000 },
                 ]
               },
               ]
@@ -161,11 +168,44 @@ class App extends Component {
     
     this.onClickNext = this.onClickNext.bind(this);
     this.updateCostRange = this.updateCostRange.bind(this);
+    this.reCalculate = this.reCalculate.bind(this);
   }
 
   updateCostRange(tabKey) {
-    const {costMax, costMin} = this.state.tabs.filter(tab => tab.id == tabKey)[0];
-    this.setState({costMin: costMin, costMax: costMax});
+    const {index, costMax, costMin} = this.state.tabs.filter(tab => tab.id == tabKey)[0];
+    this.setState({costMin: costMin, costMax: costMax, currentTabIndex: index});
+  }
+  
+  reCalculate(e, selectedCollection, selectedQuestion, selectedAnswer) {
+    // let selectedAnswer = e.target.value
+    let currentTab = this.state.tabs[this.state.currentTabIndex];
+    let selectedItems = []
+    let totalCostMin = 0;
+    let totalCostMax = 0;
+    // select current answer
+    let newQuestions = currentTab.collections.map(collection => collection.questions.map(question => question.answers.map(answer => {
+      if (collection.title === selectedCollection.title && question.title === selectedQuestion.title) {
+        if (answer.title === selectedAnswer.title) {
+          answer.isChecked = true;
+        } else {
+          answer.isChecked = false;
+        }
+      }
+      if (answer.isChecked) {
+        selectedItems.push(answer);
+        totalCostMin += answer.costMin;
+        totalCostMax += answer.costMax; 
+      }
+      return answer;
+    })));
+    
+    this.setState({
+      costMin: totalCostMin,
+      costMax: totalCostMax,
+      selectedItems: selectedItems,      
+      newQuestions
+    })
+    // e.preventDefault();
   }
 
   onClickNext() {
@@ -176,11 +216,11 @@ class App extends Component {
   }
 
   render() {
-    const { tabs, currentStep, costMin, costMax } = this.state;
+    const { selectedItems, tabs, currentStep, costMin, costMax } = this.state;
     return (
     <div className="App">
       <Navbar bg="light" expand="lg">
-        <Navbar.Brand href="#">React-Bootstrap</Navbar.Brand>
+        <Navbar.Brand href="#">React-Bootstrap Calculator</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
@@ -193,13 +233,47 @@ class App extends Component {
           </Form>
         </Navbar.Collapse>
       </Navbar>
+      <br/>
       <Container fluid>
         <Row>
-          <Col>  
-            <h5>Video Production Cost Range:</h5>
-            ${ costMin } - ${ costMax }
+          <Col md={3}>
+            <Card>
+              <Card.Header>Video Production Cost Range:</Card.Header>
+              <Card.Body>
+                <Card.Title>
+                  ${ costMin } - ${ costMax }
+                </Card.Title>
+                {/* <Card.Text>
+                  ${ costMin } - ${ costMax }
+                </Card.Text> */}
+                {/* <Button variant="primary">Save as PDF</Button> */}
+              </Card.Body>
+            </Card>
+            <br/>
+            
+            <Table striped bordered hover responsive="xs">
+              {/* <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Cost Range</th>
+                </tr>
+              </thead> */}
+              <tbody>
+                { selectedItems.map((item, index) => (<tr key={`selectedService${index}`}>
+                  <td>
+                    {item.title}
+                  </td>
+                  <td>                  
+                    ${ item.costMin } - ${ item.costMax }
+                  </td>
+                </tr>
+                )
+                )}
+              </tbody>
+            </Table>
+            
           </Col>
-          <Col md={10}>
+          <Col md={9}>
             <Tabs defaultActiveKey={tabs[0].id} id="uncontrolled-tab-example" onSelect={this.updateCostRange }>
               { tabs.map((tab,index) => 
                 // <Tab eventKey={tab.id} title={tab.title} onChange={(e)=>this.updateCostRange(e,index) } value={index}>
@@ -217,11 +291,17 @@ class App extends Component {
                           <Accordion.Collapse eventKey={`${qid}`}>
                             <Card.Body>
                               {/* <Stepper items={question.answers} /> */}
-                              {question.answers && question.answers.map((answer,index) => 
+                              {question.answers && question.answers.map((answer, index) => 
                                 <div class="form-check"
                                 // class="form-check form-check-inline"
                                 >
-                                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id={`inlineRadio${index}`} value={`option${index}`} />
+                                  <input class="form-check-input" type="radio" 
+                                  // name="inlineRadioOptions" 
+                                  id={`inlineRadio${index}`} 
+                                  // value={`option${index}`} 
+                                  value={answer.title}
+                                  onChange={(e) => this.reCalculate(e, collection, question, answer)} 
+                                  checked={answer.isChecked} />
                                   <label class="form-check-label" for={`inlineRadio${index}`}>{answer.title}</label>
                                 </div>
                               )}
