@@ -6,6 +6,7 @@ import styled, { keyframes } from "styled-components";
 const Colors = {
   MAIN_CONTAINER_BG: "#FAFAFA",
   GREEN: "#4DC3B6",
+  GREY: "#ccc",
 };
 
 const StepperContainer = styled(Flex)`
@@ -18,10 +19,19 @@ const StepperContainer = styled(Flex)`
   height: ${({ height }) => height}px;
 `;
 
-const RoundImage = styled(Image)`
+const RoundPrevStepsImage = styled(Image)`
   width: ${({ size }) => size}px;
   height: ${({ size }) => size}px;
-  background-color: ${Colors.GREEN};
+  // background-color: ${Colors.GREEN}; 
+  // border: 2px solid ${Colors.GREEN};
+  border: 2px solid ${Colors.GREY};
+  border-radius: ${({ size }) => size}px;
+`;
+
+const RoundMarkImage = styled(Image)`
+  width: ${({ size }) => size}px;
+  height: ${({ size }) => size}px;
+  background-color: ${Colors.GREEN}; 
   border: 2px solid ${Colors.GREEN};
   border-radius: ${({ size }) => size}px;
 `;
@@ -41,13 +51,14 @@ const RoundIcon = styled.div`
       ? `
         animation-delay: 1s;
         box-shadow: 0px 0px 0px 6px ${Colors.GREEN} inset;
-        border: 2px solid ${Colors.GREEN};
+        border: 2px solid ${Colors.GREY};
+        border-radius: ${({ size }) => size}px;
         transition: box-shadow 1s;
         transition: border 1s;
         `
       : `
-        border: 2px solid #ccc;
-        background-color:#fff;
+        border: 2px solid ${Colors.GREY};
+        background-color: #fff;
       `}
 `;
 
@@ -58,13 +69,13 @@ const lineFillAnim = keyframes`
 // 100% { width:30px; }
 
 const Line = styled.div`
-  background-color: #ccc;
+  background-color: ${Colors.GREY};
   width: 30px;
   height: 2px;
 `;
 
 const GreyLine = styled(Line)`
-  background-color: #ccc;
+  background-color: ${Colors.GREY};
   width: ${({ width }) => width}px;
 `;
 
@@ -76,14 +87,18 @@ const GreenLine = styled(Line)`
 
 const StepRound = ({ active, done, size }) =>
   done ? (
-    <RoundImage src={`data:image/svg+xml;base64,
+    <RoundPrevStepsImage src={`data:image/svg+xml;base64,
 PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDUxMS45OTkgNTExLjk5OSIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNTExLjk5OSA1MTEuOTk5OyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgd2lkdGg9IjUxMiIgaGVpZ2h0PSI1MTIiPjxnPjxnPgoJPGc+CgkJPHBhdGggZD0iTTUwNi4yMzEsNzUuNTA4Yy03LjY4OS03LjY5LTIwLjE1OC03LjY5LTI3Ljg0OSwwbC0zMTkuMjEsMzE5LjIxMUwzMy42MTcsMjY5LjE2M2MtNy42ODktNy42OTEtMjAuMTU4LTcuNjkxLTI3Ljg0OSwwICAgIGMtNy42OSw3LjY5LTcuNjksMjAuMTU4LDAsMjcuODQ5bDEzOS40ODEsMTM5LjQ4MWM3LjY4Nyw3LjY4NywyMC4xNiw3LjY4OSwyNy44NDksMGwzMzMuMTMzLTMzMy4xMzYgICAgQzUxMy45MjEsOTUuNjY2LDUxMy45MjEsODMuMTk4LDUwNi4yMzEsNzUuNTA4eiIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgY2xhc3M9ImFjdGl2ZS1wYXRoIiBzdHlsZT0iZmlsbDojRkZGRkZGIiBkYXRhLW9sZF9jb2xvcj0iIzAwMDAwMCI+PC9wYXRoPgoJPC9nPgo8L2c+PC9nPiA8L3N2Zz4=`} size={size} />
   ) : (
+    <div>
     <RoundIcon active={active} size={size} />
+    </div>
   );
 
 const StepLine = ({ active, width }) => (
-  <GreyLine width={width}>{active && <GreenLine width={width} />}</GreyLine>
+  <GreyLine width={width}>
+    {/* {active && <GreenLine width={width} />} */}
+  </GreyLine>
 );
 
 class Stepper extends Component {
