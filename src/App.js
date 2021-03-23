@@ -220,7 +220,7 @@ class App extends Component {
     return (
     <div className="App">
       <Navbar bg="light" expand="lg">
-        <Navbar.Brand href="#">React-Bootstrap Calculator</Navbar.Brand>
+        <Navbar.Brand href="#">React-Bootstrap Cost Calculator</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
@@ -236,7 +236,7 @@ class App extends Component {
       <br/>
       <Container fluid>
         <Row>
-          <Col md={3}>
+          <Col sm={3} md={4} lg={6}>
             <Card>
               <Card.Header>Video Production Cost Range:</Card.Header>
               <Card.Body>
@@ -273,7 +273,7 @@ class App extends Component {
             </Table>
             
           </Col>
-          <Col md={9}>
+          <Col sm={9} md={8} lg={6} style={{overflowY:'scroll', height: '85vh'}}>
             <Tabs defaultActiveKey={tabs[0].id} id="uncontrolled-tab-example" onSelect={this.updateCostRange }>
               { tabs.map((tab,index) => 
                 // <Tab eventKey={tab.id} title={tab.title} onChange={(e)=>this.updateCostRange(e,index) } value={index}>
