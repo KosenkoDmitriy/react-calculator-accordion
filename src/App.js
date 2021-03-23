@@ -2,27 +2,34 @@
 import './App.css';
 import Stepper from './stepper-component/src/index.js';
 // import Stepper from 'stepper-component';
+import React, { Component } from 'react';
 
-function App() {
-  return (
+class App extends Component {
+  constructor() {
+    super();
+      currentStep: 0,
+    };
+    this.onClickNext = this.onClickNext.bind(this);
+  }
+
+  onClickNext() {
+    const { steps, currentStep } = this.state;
+    this.setState({
+      currentStep: currentStep + 1,
+    });
+  }
+  render() {
+    const { steps, currentStep } = this.state;
+    return (
     <div className="App">
       <header className="App-header">
-        <Stepper steps={4} currentStep={3} />
-        {/* <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a> */}
+        <Stepper steps={4} currentStep={currentStep} onClick={this.onClickNext} />
+        <button onClick={ this.onClickNext }>Next</button>
+        
       </header>
     </div>
-  );
+    );
+  }
 }
 
 export default App;

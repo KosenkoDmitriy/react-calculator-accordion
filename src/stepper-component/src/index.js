@@ -101,7 +101,10 @@ const GreenLine = styled(Line)`
 
 const StepRound = ({ active, done, size }) =>
   done ? (
-    <RoundPrevStepsImage src={ic_done} size={size} />
+    <div>
+      {/* <RoundPrevStepsImage src={ic_done} size={size} /> */}
+      <RoundImage src={ic_done} active={active} size={size} />
+    </div>
   ) : (
     <div>
       {/* <RoundNextUndoneStepsIcon active={active} size={size} /> */}
