@@ -141,11 +141,9 @@ class App extends Component {
                       // defaultActiveKey="0"
                       >
                         <Card>
-                          <Card.Header>
-                            <Accordion.Toggle as={Card.Header} eventKey={`${qid}`}>
-                              {question.title}
-                            </Accordion.Toggle>
-                          </Card.Header>
+                          <Accordion.Toggle as={Card.Header} eventKey={`${qid}`}>
+                            {question.title}
+                          </Accordion.Toggle>
                           <Accordion.Collapse eventKey={`${qid}`}>
                             <Card.Body>
                               {question.answers && question.answers.map(answer => <p>{answer.title}</p>)}
