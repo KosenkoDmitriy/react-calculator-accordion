@@ -1,7 +1,7 @@
 
 // import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Stepper from './stepper-component/src/index.js';
+// import Stepper from './stepper-component/src/index.js';
 import React, { Component } from 'react';
 
 
@@ -20,12 +20,7 @@ import Nav from 'react-bootstrap/Nav';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import FormControl from 'react-bootstrap/FormControl';
-import InputGroup from 'react-bootstrap/InputGroup';
 import Table from 'react-bootstrap/Table';
-
-import ToggleButton from "react-bootstrap/ToggleButton";
-import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
-
 
 class App extends Component {
   constructor() {
@@ -137,32 +132,6 @@ class App extends Component {
           ]
         },
       ],
-
-      steps: [{
-        title: 'Step One',
-        onClick: (e) => {
-          e.preventDefault()
-          console.log('onClick', 1)
-        }
-      }, {
-        title: 'Step Two',
-        onClick: (e) => {
-          e.preventDefault()
-          console.log('onClick', 2)
-        }
-      }, {
-        title: 'Step Three (Disabled)',
-        onClick: (e) => {
-          e.preventDefault()
-          console.log('onClick', 3)
-        }
-      }, {
-        title: 'Step Four',
-        onClick: (e) => {
-          e.preventDefault()
-          console.log('onClick', 4)
-        }
-      }],
       currentStep: 0,
     };
     
@@ -172,7 +141,7 @@ class App extends Component {
   }
 
   updateCostRange(tabKey) {
-    const {index, costMax, costMin} = this.state.tabs.filter(tab => tab.id == tabKey)[0];
+    const {index, costMax, costMin} = this.state.tabs.filter(tab => tab.id === tabKey)[0];
     this.setState({costMin: costMin, costMax: costMax, currentTabIndex: index});
   }
   
@@ -209,7 +178,7 @@ class App extends Component {
   }
 
   onClickNext() {
-    const { steps, currentStep } = this.state;
+    const { currentStep } = this.state;
     this.setState({
       currentStep: currentStep + 1,
     });
@@ -241,7 +210,9 @@ class App extends Component {
               <Card.Header>Video Production Cost Range:</Card.Header>
               <Card.Body>
                 <Card.Title>
+                  <p className="text-center">
                   ${ costMin } - ${ costMax }
+                  </p>
                 </Card.Title>
                 {/* <Card.Text>
                   ${ costMin } - ${ costMax }
@@ -292,17 +263,17 @@ class App extends Component {
                             <Card.Body>
                               {/* <Stepper items={question.answers} /> */}
                               {question.answers && question.answers.map((answer, index) => 
-                                <div class="form-check"
-                                // class="form-check form-check-inline"
+                                <div className="form-check"
+                                // className="form-check form-check-inline"
                                 >
-                                  <input class="form-check-input" type="radio" 
+                                  <input className="form-check-input" type="radio" 
                                   // name="inlineRadioOptions" 
                                   id={`inlineRadio${index}`} 
                                   // value={`option${index}`} 
                                   value={answer.title}
                                   onChange={(e) => this.reCalculate(e, collection, question, answer)} 
                                   checked={answer.isChecked} />
-                                  <label class="form-check-label" for={`inlineRadio${index}`}>{answer.title}</label>
+                                  <label className="form-check-label" for={`inlineRadio${index}`}>{answer.title}</label>
                                 </div>
                               )}
                             </Card.Body>
