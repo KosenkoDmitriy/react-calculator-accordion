@@ -4,15 +4,22 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Stepper from './stepper-component/src/index.js';
 import React, { Component } from 'react';
 
+
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Navbar from 'react-bootstrap/Navbar'
+
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 
 import Accordion from 'react-bootstrap/Accordion';
 import Card from 'react-bootstrap/Card';
+
+import Navbar from 'react-bootstrap/Navbar'
+import Nav from 'react-bootstrap/Nav';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import FormControl from 'react-bootstrap/FormControl';
 
 class App extends Component {
   constructor() {
@@ -125,9 +132,23 @@ class App extends Component {
   }
 
   render() {
-    const { steps, tabs, currentStep } = this.state;
+    const { tabs, currentStep } = this.state;
     return (
     <div className="App">
+      <Navbar bg="light" expand="lg">
+        <Navbar.Brand href="#">React-Bootstrap</Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="mr-auto">
+            <Nav.Link href="#">Home</Nav.Link>
+            <Nav.Link href="#">Calculator</Nav.Link>
+          </Nav>
+          <Form inline>
+            <FormControl type="text" placeholder="Search" className="mr-sm-2" />
+            <Button variant="outline-success">Search</Button>
+          </Form>
+        </Navbar.Collapse>
+      </Navbar>
       <Container>
         <Row>
           <Col>
