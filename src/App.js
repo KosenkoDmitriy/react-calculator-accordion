@@ -218,20 +218,13 @@ class App extends Component {
                             <Card.Body>
                               {/* <Stepper items={question.answers} /> */}
                               {question.answers && question.answers.map((answer,index) => 
-                                <div 
-                                class="form-check"
+                                <div class="form-check"
                                 // class="form-check form-check-inline"
                                 >
                                   <input class="form-check-input" type="radio" name="inlineRadioOptions" id={`inlineRadio${index}`} value={`option${index}`} />
                                   <label class="form-check-label" for={`inlineRadio${index}`}>{answer.title}</label>
                                 </div>
                               )}
-
-                              {/* <Row>
-                              {question.answers && question.answers.map(answer => 
-                                <Col><InputGroup.Radio aria-label="Checkbox for following text input" />{answer.title}</Col>
-                              )}
-                              </Row> */}
                             </Card.Body>
                           </Accordion.Collapse>
                         </Card>
