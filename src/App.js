@@ -11,6 +11,8 @@ import Navbar from 'react-bootstrap/Navbar'
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 
+import Accordion from 'react-bootstrap/Accordion';
+import Card from 'react-bootstrap/Card';
 
 class App extends Component {
   constructor() {
@@ -128,34 +130,31 @@ class App extends Component {
     <div className="App">
       <Container>
         <Row>
-          {/* <Tab eventKey="home" title="Home">
-                <div>
-                  <Stepper steps={4} currentStep={currentStep} onClick={this.onClickNext} />
-                  <button onClick={ this.onClickNext }>Next</button>  
-                </div>
-              </Tab>
-                
-              <Tab eventKey="profile" title="Profile">
-                <div>
-                  <Stepper steps={4} currentStep={currentStep} onClick={this.onClickNext} />
-                  <button onClick={ this.onClickNext }>Next</button>  
-                </div>
-              </Tab>
-              <Tab eventKey="contact" title="Contact" disabled>
-                <div>
-                  <Stepper steps={4} currentStep={currentStep} onClick={this.onClickNext} />
-                  <button onClick={ this.onClickNext }>Next</button>  
-                </div> 
-              </Tab> */}
-        </Row>
-        <Row>
           <Col>
             <Tabs defaultActiveKey={tabs[0].id} id="uncontrolled-tab-example">
-            
-              { tabs.map(tab =>
+              { tabs.map(tab => 
                 <Tab eventKey={tab.id} title={tab.title}>
-                  { tab.collections.map(collection =>
-                  <h5>{collection.title}</h5>
+                  { tab.collections.map((collection, cid) => <div>
+                    <h5>{collection.title}</h5>
+                    {collection.questions && collection.questions.map((question, qid) => 
+                      <Accordion 
+                      // defaultActiveKey="0"
+                      >
+                        <Card>
+                          <Card.Header>
+                            <Accordion.Toggle as={Card.Header} eventKey={`${qid}`}>
+                              {question.title}
+                            </Accordion.Toggle>
+                          </Card.Header>
+                          <Accordion.Collapse eventKey={`${qid}`}>
+                            <Card.Body>
+                              {question.answers && question.answers.map(answer => <p>{answer.title}</p>)}
+                            </Card.Body>
+                          </Accordion.Collapse>
+                        </Card>
+                      </Accordion>
+                    )}
+                  </div>
                   )}
                 </Tab>
               )}
