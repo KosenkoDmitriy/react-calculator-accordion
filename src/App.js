@@ -1,14 +1,16 @@
-// import logo from './logo.svg';
-// import './App.scss';
+
 // import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import Stepper from './stepper-component/src/index.js';
-import React, {Component} from 'react';
-// import {Tab, Tabs} from 'react-bootstrap';
-import Tabs from 'react-bootstrap/Tabs';
-import Tab from 'react-bootstrap/Tab';
+import React, { Component } from 'react';
+
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import Col from 'react-bootstrap/Col';
+import Navbar from 'react-bootstrap/Navbar'
+import Tabs from 'react-bootstrap/Tabs';
+import Tab from 'react-bootstrap/Tab';
+
 
 class App extends Component {
   constructor() {
@@ -63,11 +65,26 @@ class App extends Component {
           }
         ]
         },
-        { title: 'Mid-Range', id: 'mid-range' },
-        { title: 'High-End', id: 'high-end',},
+        { title: 'Mid-Range', id: 'mid-range', 
+          collections: [
+            { title: 'Pre-Production', 
+              questions: [
+                { },
+              ]
+            }
+          ]
+        },
+        { title: 'High-End', id: 'high-end',
+          collections: [
+            { title: 'Pre-Production', 
+              questions: [
+                { },
+              ]
+            }
+          ]
+        },
       ],
 
-      
       steps: [{
         title: 'Step One',
         onClick: (e) => {
@@ -104,31 +121,48 @@ class App extends Component {
       currentStep: currentStep + 1,
     });
   }
+
   render() {
-    const { steps, currentStep } = this.state;
+    const { steps, tabs, currentStep } = this.state;
     return (
     <div className="App">
-      <header className="App-header">
-        <Container>
+      <Container>
         <Row>
-        <Tabs defaultActiveKey="home" id="uncontrolled-tab-example">
-          <Tab eventKey="home" title="Home">
-            <div>
-              <Stepper steps={4} currentStep={currentStep} onClick={this.onClickNext} />
-              <button onClick={ this.onClickNext }>Next</button>  
-            </div>
-          </Tab>
-            
-          <Tab eventKey="profile" title="Profile">
-            {/* <Collection title="" /> */}
-          </Tab>
-          <Tab eventKey="contact" title="Contact" disabled>
-            {/* <Collection title="" /> */}
-          </Tab>
-        </Tabs>
+          {/* <Tab eventKey="home" title="Home">
+                <div>
+                  <Stepper steps={4} currentStep={currentStep} onClick={this.onClickNext} />
+                  <button onClick={ this.onClickNext }>Next</button>  
+                </div>
+              </Tab>
+                
+              <Tab eventKey="profile" title="Profile">
+                <div>
+                  <Stepper steps={4} currentStep={currentStep} onClick={this.onClickNext} />
+                  <button onClick={ this.onClickNext }>Next</button>  
+                </div>
+              </Tab>
+              <Tab eventKey="contact" title="Contact" disabled>
+                <div>
+                  <Stepper steps={4} currentStep={currentStep} onClick={this.onClickNext} />
+                  <button onClick={ this.onClickNext }>Next</button>  
+                </div> 
+              </Tab> */}
         </Row>
-        </Container>
-      </header>
+        <Row>
+          <Col>
+            <Tabs defaultActiveKey={tabs[0].id} id="uncontrolled-tab-example">
+            
+              { tabs.map(tab =>
+                <Tab eventKey={tab.id} title={tab.title}>
+                  { tab.collections.map(collection =>
+                  <h5>{collection.title}</h5>
+                  )}
+                </Tab>
+              )}
+            </Tabs>
+          </Col>
+        </Row>
+      </Container>
     </div>
     );
   }
