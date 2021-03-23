@@ -20,13 +20,16 @@ import Nav from 'react-bootstrap/Nav';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import FormControl from 'react-bootstrap/FormControl';
+import InputGroup from 'react-bootstrap/InputGroup';
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
+      costMin: 300,
+      costMax: 1000,
       tabs: [
-        { title: 'Low-Cost', id: 'low-cost',
+        { title: 'Low-Cost', id: 'low-cost', costMin: 300, costMax: 1000,
         collections: [
           { title: 'Pre-Production', 
             questions: [
@@ -74,20 +77,54 @@ class App extends Component {
           }
         ]
         },
-        { title: 'Mid-Range', id: 'mid-range', 
+        { title: 'Mid-Range', id: 'mid-range', costMin: 1000, costMax: 5000,
           collections: [
             { title: 'Pre-Production', 
               questions: [
-                { },
+              {
+                title: "3. What type of film crew do you need for your shoot?",
+                answers: [
+                  {title: "We don't need a camera for this video project"},
+                  {title: "One camera operator with camera, lights and audio"},
+                  {title: "One camera operator with two cameras lights and audio"},
+                  {title: "Two camera operators with two cameras lights and audio"},
+                ]
+              },
+              {
+                title: "4. How many days of shooting are required?",
+                answers: [
+                  {title: "Half day of shooting"},
+                  {title: "Full day of shooting"},
+                  {title: "Two days of shooting"},
+                  {title: "Three days of shooting"},
+                ]
+              },
               ]
             }
           ]
         },
-        { title: 'High-End', id: 'high-end',
+        { title: 'High-End', id: 'high-end', costMin: 5000, costMax: 20000,
           collections: [
             { title: 'Pre-Production', 
               questions: [
-                { },
+              {
+                title: "3. What type of film crew do you need for your shoot?",
+                answers: [
+                  {title: "We don't need a camera for this video project"},
+                  {title: "One camera operator with camera, lights and audio"},
+                  {title: "One camera operator with two cameras lights and audio"},
+                  {title: "Two camera operators with two cameras lights and audio"},
+                ]
+              },
+              {
+                title: "4. How many days of shooting are required?",
+                answers: [
+                  {title: "Half day of shooting"},
+                  {title: "Full day of shooting"},
+                  {title: "Two days of shooting"},
+                  {title: "Three days of shooting"},
+                ]
+              },
               ]
             }
           ]
@@ -121,7 +158,14 @@ class App extends Component {
       }],
       currentStep: 0,
     };
+    
     this.onClickNext = this.onClickNext.bind(this);
+    this.updateCostRange = this.updateCostRange.bind(this);
+  }
+
+  updateCostRange(tabKey) {
+    const {costMax, costMin} = this.state.tabs.filter(tab => tab.id == tabKey)[0];
+    this.setState({costMin: costMin, costMax: costMax});
   }
 
   onClickNext() {
@@ -132,7 +176,7 @@ class App extends Component {
   }
 
   render() {
-    const { tabs, currentStep } = this.state;
+    const { tabs, currentStep, costMin, costMax } = this.state;
     return (
     <div className="App">
       <Navbar bg="light" expand="lg">
@@ -149,14 +193,19 @@ class App extends Component {
           </Form>
         </Navbar.Collapse>
       </Navbar>
-      <Container>
+      <Container fluid>
         <Row>
-          <Col>
-            <Tabs defaultActiveKey={tabs[0].id} id="uncontrolled-tab-example">
-              { tabs.map(tab => 
-                <Tab eventKey={tab.id} title={tab.title}>
+          <Col>  
+            <h5>Video Production Cost Range:</h5>
+            ${ costMin } - ${ costMax }
+          </Col>
+          <Col md={10}>
+            <Tabs defaultActiveKey={tabs[0].id} id="uncontrolled-tab-example" onSelect={this.updateCostRange }>
+              { tabs.map((tab,index) => 
+                // <Tab eventKey={tab.id} title={tab.title} onChange={(e)=>this.updateCostRange(e,index) } value={index}>
+                <Tab eventKey={tab.id} title={tab.title} value={index}>
                   { tab.collections.map((collection, cid) => <div>
-                    <h5>{collection.title}</h5>
+                    {collection.title ? <h5>{collection.title}</h5> : <h5>no content</h5>}
                     {collection.questions && collection.questions.map((question, qid) => 
                       <Accordion 
                       // defaultActiveKey="0"
@@ -167,7 +216,22 @@ class App extends Component {
                           </Accordion.Toggle>
                           <Accordion.Collapse eventKey={`${qid}`}>
                             <Card.Body>
-                              {question.answers && question.answers.map(answer => <p>{answer.title}</p>)}
+                              {/* <Stepper items={question.answers} /> */}
+                              {question.answers && question.answers.map((answer,index) => 
+                                <div 
+                                class="form-check"
+                                // class="form-check form-check-inline"
+                                >
+                                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id={`inlineRadio${index}`} value={`option${index}`} />
+                                  <label class="form-check-label" for={`inlineRadio${index}`}>{answer.title}</label>
+                                </div>
+                              )}
+
+                              {/* <Row>
+                              {question.answers && question.answers.map(answer => 
+                                <Col><InputGroup.Radio aria-label="Checkbox for following text input" />{answer.title}</Col>
+                              )}
+                              </Row> */}
                             </Card.Body>
                           </Accordion.Collapse>
                         </Card>
@@ -179,6 +243,7 @@ class App extends Component {
               )}
             </Tabs>
           </Col>
+          
         </Row>
       </Container>
     </div>

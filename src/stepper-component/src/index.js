@@ -99,7 +99,7 @@ const GreenLine = styled(Line)`
   width: ${({ width }) => width}px;
 `;
 
-const StepRound = ({ active, done, size }) =>
+const StepRound = ({ items, active, done, size }) =>
   done ? (
     <div>
       {/* <RoundPrevStepsImage src={ic_done} size={size} /> */}
@@ -119,6 +119,12 @@ const StepLine = ({ active, width }) => (
 );
 
 class Stepper extends Component {
+  // constructor() {
+  //   super();
+  //   this.state = {
+  //     items: this.props.items && this.props.items
+  //   }
+  // }
   render() {
     let {
       steps = 3,
@@ -126,11 +132,11 @@ class Stepper extends Component {
       px = 16,
       py = 12,
       size = 20,
-      lineWidth = 30
+      lineWidth = 150
     } = this.props;
 
     currentStep = currentStep - 1;
-
+    steps = this.props.items.length;
     const width = steps * (size + 4) + lineWidth * (steps - 1) + 2 * px;
     const height = size + 2 * py;
     const setpsArray = Array(steps).fill();
@@ -149,8 +155,9 @@ class Stepper extends Component {
           };
           return (
             <Flex alignItems={"center"}>
-              <StepRound {...props} />
-              {index !== steps - 1 && <StepLine {...lineProps} />}
+              <div>{this.props.items.map(item=><div>{item.title}</div>)}</div>
+              {/* <StepRound {...props} />
+              {index !== steps - 1 && <StepLine {...lineProps} />} */}
             </Flex>
           );
         })}
